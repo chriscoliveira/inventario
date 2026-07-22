@@ -345,6 +345,8 @@
     const mac = document.getElementById('f-mac').value.trim();
     const ip = document.getElementById('f-ip').value.trim();
     const descricao = document.getElementById('f-descricao').value.trim();
+    const dataHoje = new Date().toLocaleDateString('pt-BR'); // ex: 22/07/2026
+    const descricaoComData = descricao ? `${descricao} [${dataHoje}]` : `[${dataHoje}]`;
     const obs = document.getElementById('f-obs').value.trim();
 
     if (!nome) {
@@ -373,7 +375,7 @@
             'Modelo': modelo,
             'Endereço MAC': mac,
             'IP': ip,
-            'Descrição': descricao,
+            'Descrição': descricaoComData,
             'Observação': obs
           }
         })
