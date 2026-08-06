@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Inventário de Equipamentos CT18</title>
-<link rel="manifest" href="manifest.json">
+<link rel="manifest" id="pwa-manifest">
 <meta name="theme-color" content="#e08a2c">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -206,6 +206,27 @@
     table: 'ct18',
     token: 'patlCHckOgao34SIf.5f2ed272467b9a423e0272266596a346431750846df59fdea1c71d757d991f92'
   };
+
+  // ---- PWA: manifest gerado dinamicamente ----
+  // Só muda o STORE_LABEL ao duplicar este arquivo para outra loja.
+  const STORE_LABEL = 'CT18';
+  const manifestData = {
+    name: `Inventário de Equipamentos ${STORE_LABEL}`,
+    short_name: `Inventário ${STORE_LABEL}`,
+    start_url: location.pathname + location.search,
+    scope: './',
+    id: location.pathname,
+    display: 'standalone',
+    orientation: 'portrait',
+    background_color: '#14161a',
+    theme_color: '#e08a2c',
+    icons: [
+      { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
+      { src: 'icon-512.png', sizes: '512x512', type: 'image/png' }
+    ]
+  };
+  const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
+  document.getElementById('pwa-manifest').setAttribute('href', URL.createObjectURL(manifestBlob));
 
   function toast(msg, type){
     const t = document.getElementById('toast');
