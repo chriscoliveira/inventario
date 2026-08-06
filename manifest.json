@@ -1,0 +1,14 @@
+{
+  "name": "Inventário de Equipamentos CT18",
+  "short_name": "Inventário CT18",
+  "start_url": "./inventarioct18.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#14161a",
+  "theme_color": "#e08a2c",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

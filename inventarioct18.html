@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Inventário de Equipamentos CT18</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#e08a2c">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Inventário CT18">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <style>
   :root{
@@ -217,10 +225,32 @@
     scanTargetId = targetId;
     scannerLabel.textContent = labelText;
     overlay.classList.add('open');
-    html5Qrcode = new Html5Qrcode('reader');
+    html5Qrcode = new Html5Qrcode('reader', {
+      formatsToSupport: [
+        Html5QrcodeSupportedFormats.QR_CODE,
+        Html5QrcodeSupportedFormats.CODE_128,
+        Html5QrcodeSupportedFormats.CODE_39,
+        Html5QrcodeSupportedFormats.CODE_93,
+        Html5QrcodeSupportedFormats.EAN_13,
+        Html5QrcodeSupportedFormats.EAN_8,
+        Html5QrcodeSupportedFormats.UPC_A,
+        Html5QrcodeSupportedFormats.UPC_E,
+        Html5QrcodeSupportedFormats.ITF,
+        Html5QrcodeSupportedFormats.CODABAR
+      ],
+      verbose: false
+    });
     html5Qrcode.start(
       { facingMode: 'environment' },
-      { fps: 12, qrbox: { width: 280, height: 140 } },
+      {
+        fps: 15,
+        qrbox: { width: 300, height: 130 },
+        aspectRatio: 1.6,
+        disableFlip: false,
+        experimentalFeatures: {
+          useBarCodeDetectorIfSupported: true
+        }
+      },
       (decodedText) => {
         document.getElementById(scanTargetId).value = decodedText;
         closeScanner();
@@ -400,7 +430,12 @@
       btn.disabled = false;
       btn.textContent = 'Salvar equipamento';
     }
-  });
+  });  // ---- PWA: registro do service worker (necessário para "instalar" no Android) ----
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    });
+  }
 </script>
 
 </body>
